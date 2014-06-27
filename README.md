@@ -1,8 +1,10 @@
-SMS reception plugin for Phonegap
+SMS reception (non default port / data sms) plugin for Phonegap/Cordova
 ===============================
-By Pierre-Yves Orban
+By Pierre-Yves Orban and Neeraj Tuteja
 
-This Android Phonegap plugin allows you to receive incoming SMS. You have the possibility to stop the message broadcasting and, thus, avoid theincoming message native popup.
+This Android Phonegap plugin allows you to receive incoming data SMS on non-default port. You have the possibility to stop the message broadcasting and, thus, avoid theincoming message native popup.
+
+Data SMS or SMS received on non-default port on a smartphone doesn't normally go to the native message application. So, it has to be received through the data sms intent. In case of non-smartphone like Symbian phone, data SMS gets converted to telephony SMS, thereby enabling the native message application to receive the message. 
 
 This plugin was successfully tested with Phonegap 2.5 and Android 4.2.2 (on a Samsung Galaxy Nexus device).
 
@@ -74,6 +76,7 @@ A good way to manage this is to stop the sms reception when the onPause event is
 The MIT License
 
 Copyright (c) 2013 Pierre-Yves Orban
+Copyright (c) 2014 Neeraj Tuteja
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
