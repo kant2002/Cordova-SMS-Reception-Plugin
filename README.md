@@ -5,10 +5,13 @@ By Pierre-Yves Orban and Neeraj Tuteja
 ##Caution##
 If you are going to use both telephony sms plugin from the parent repository and this data sms plugin, then you need to rename files, Java classes and Javascript functions to avoid name conflicts. 
 
+##Description##
 This Android Phonegap plugin allows you to receive incoming data SMS on non-default port. You have the possibility to stop the message broadcasting and, thus, avoid theincoming message native popup.
 
+## Main difference between telephony SMS and data SMS##
 Data SMS or SMS received on non-default port on a smartphone doesn't normally go to the native message application. So, it has to be received through the data sms intent. In case of non-smartphone like Symbian phone, data SMS gets converted to telephony SMS, thereby enabling the native message application to receive the message. 
 
+##Devices tested##
 This plugin was successfully tested with Phonegap 2.5 and Android 4.2.2 (on a Samsung Galaxy Nexus device).
 
 ## Adding this plugin to your project ##
