@@ -1,5 +1,6 @@
 /*
 Copyright (C) 2013 by Pierre-Yves Orban
+Copyright (C) 2014 by Neeraj Tuteja
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +31,7 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.BroadcastReceiver;
 
 public class SmsInboxPlugin extends CordovaPlugin {
 	public final String ACTION_HAS_SMS_POSSIBILITY = "HasSMSPossibility";
@@ -74,14 +76,12 @@ public class SmsInboxPlugin extends CordovaPlugin {
 			this.isReceiving = true;
 				
 			if(this.smsReceiver == null) {
-				this.smsReceiver = new SmsReceiver();
-				IntentFilter fp = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
-			    fp.setPriority(1000);
-			    // fp.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-			    this.cordova.getActivity().registerReceiver(this.smsReceiver, fp);
+                            IntentFilter filter = new IntentFilter("android.intent.action.DATA_SMS_RECEIVED");
+                            filter.addDataScheme("sms");
+                            this.smsReceiver = new SmsReceiver();
+                           this.cordova.getActivity().registerReceiver(this.smsReceiver, filter);
 			}
-			
-			this.smsReceiver.startReceiving(callbackContext);
+			((SmsReceiver)(this.smsReceiver)).startReceiving(callbackContext);
 	
 			PluginResult pluginResult = new PluginResult(
 					PluginResult.Status.NO_RESULT);
