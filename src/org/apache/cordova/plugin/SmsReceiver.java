@@ -34,40 +34,39 @@ import android.telephony.SmsMessage;
 public class SmsReceiver extends BroadcastReceiver {
 	
 
-	public static final String SMS_EXTRA_NAME = "pdus";
-	private CallbackContext callback_receive;
-	private boolean isReceiving = true;
-	
-	// This broadcast boolean is used to continue or not the message broadcast
-	// to the other BroadcastReceivers waiting for an incoming SMS (like the native SMS app)
-	private boolean broadcast = false;
-	
+	private static final String SMS_RECEIVED = "android.intent.action.DATA_SMS_RECEIVED";
+
 	@Override
-	public void onReceive(Context ctx, Intent intent) {
-		
-		// Get the SMS map from Intent
-	    Bundle extras = intent.getExtras();
-	    if (extras != null)
-	    {
-		   // Get received SMS Array
-			Object[] smsExtra = (Object[]) extras.get(SMS_EXTRA_NAME);
+	public void onReceive(final Context context, final Intent intent) {
+		// Retrieves a map of extended data from the intent.
 
-			for (int i=0; i < smsExtra.length; i++)
-			{
-				SmsMessage sms = SmsMessage.createFromPdu((byte[]) smsExtra[i]);
-				if(this.isReceiving && this.callback_receive != null) {
-					String formattedMsg = sms.getOriginatingAddress() + ">" + sms.getMessageBody();
-		        	PluginResult result = new PluginResult(PluginResult.Status.OK, formattedMsg);
-		           	result.setKeepCallback(true);
-		            callback_receive.sendPluginResult(result);
-				}
-			}
+		if (intent != null && SMS_RECEIVED.equals(intent.getAction())) {
+			final Bundle bundle = intent.getExtras();
 
-			// If the plugin is active and we don't want to broadcast to other receivers
-			if (this.isReceiving && !broadcast) {
-				this.abortBroadcast();
+			try {
+
+				if (bundle != null) {
+
+					final Object[] pdusObj = (Object[]) bundle.get("pdus");
+
+					for (int i = 0; i < pdusObj.length; i++) {
+
+						SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
+						String senderNum = currentMessage.getDisplayOriginatingAddress();
+						String message = currentMessage.getDisplayMessageBody();
+						Log.d("SmsReceiver", "senderNum: " + senderNum
+							  + "; message: " + message);
+					
+
+					} // end for loop
+				} // bundle is null
+
+			} catch (Exception e) {
+				Log.e("SmsReceiver", "Exception smsReceiver" + e);
+
 			}
-	     }
+		}
+
 	}
 	
 	public void broadcast(boolean v) {
