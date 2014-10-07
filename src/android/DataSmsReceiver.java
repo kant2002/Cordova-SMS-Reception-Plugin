@@ -38,6 +38,10 @@ public class DataSmsReceiver extends BroadcastReceiver {
 	private static final String SMS_RECEIVED = "android.intent.action.DATA_SMS_RECEIVED";
 	private CallbackContext callback_receive;
 	private boolean isReceiving = true;
+	
+	// This broadcast boolean is used to continue or not the message broadcast
+	// to the other BroadcastReceivers waiting for an incoming SMS (like the native SMS app)
+	private boolean broadcast = false;
 
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
@@ -57,6 +61,11 @@ public class DataSmsReceiver extends BroadcastReceiver {
 						LOG.d("SmsReceiver", "senderNum: " + senderNum
 							  + "; message: " + message);
 					}
+
+                    // If the plugin is active and we don't want to broadcast to other receivers
+                    if (this.isReceiving && !broadcast) {
+                        this.abortBroadcast();
+                    }
 				}
 			} catch (Exception e) {
 				LOG.e("SmsReceiver", "Exception smsReceiver" + e);
