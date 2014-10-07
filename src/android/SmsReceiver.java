@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package org.apache.cordova.plugin;
+package com.akurdyumov.cordova.smsinbox;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.PluginResult;

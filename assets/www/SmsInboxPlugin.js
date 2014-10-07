@@ -29,7 +29,7 @@ cordova.define("cordova/plugin/smsinboxplugin", function(require, exports, modul
   /**
    * Check if the device has a possibility to send and receive SMS
    */
-  SmsInboxPlugin.prototype.isSupported = function(successCallback,failureCallback) {
+  SmsInboxPlugin.prototype.isSupported = function(successCallback, failureCallback) {
     return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'HasSMSPossibility', []);
   }
 
@@ -39,25 +39,25 @@ cordova.define("cordova/plugin/smsinboxplugin", function(require, exports, modul
    * formatted such as: [phonenumber]>[message].
    * Example: +32472345678>Hello World
    */
-  SmsInboxPlugin.prototype.startSmsReception = function(successCallback,failureCallback) {
+  SmsInboxPlugin.prototype.startSmsReception = function(successCallback, failureCallback) {
     return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StartSmsReception', []);
   }
   
-  SmsInboxPlugin.prototype.startDataSmsReception = function(successCallback,failureCallback) {
+  SmsInboxPlugin.prototype.startDataSmsReception = function(successCallback, failureCallback) {
     return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StartDataSmsReception', []);
   }
 
   /**
    * Stop the receiving sms.
    */
-  SmsInboxPlugin.prototype.stopSmsReception = function(successCallback,failureCallback) {
+  SmsInboxPlugin.prototype.stopSmsReception = function(successCallback, failureCallback) {
     return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StopSmsReception', []);
   }
 
   /**
    * Stop the receiving sms.
    */
-  SmsInboxPlugin.prototype.stopDataSmsReception = function(successCallback,failureCallback) {
+  SmsInboxPlugin.prototype.stopDataSmsReception = function(successCallback, failureCallback) {
     return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StopDataSmsReception', []);
   }
 

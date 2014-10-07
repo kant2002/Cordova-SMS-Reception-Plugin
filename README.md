@@ -12,23 +12,14 @@ This Android Phonegap plugin allows you to receive incoming data SMS on non-defa
 Data SMS or SMS received on non-default port on a smartphone doesn't normally go to the native message application. So, it has to be received through the data sms intent. In case of non-smartphone like Symbian phone, data SMS gets converted to telephony SMS, thereby enabling the native message application to receive the message. 
 
 ##Devices tested##
-This plugin was successfully tested with Phonegap 2.5 and Android 4.2.2 (on a Samsung Galaxy Nexus device).
+This plugin was successfully tested with Cordova 3.5 and Android 4.4.2 (on a Samsung Note 3 device).
+Originally this plugin was tested with Phonegap 2.5 and Android 4.2.2  (on a Samsung Nexus device).
 
 ## Adding this plugin to your project ##
-0. (Make sure you are using Phonegap > 2.0)
-1. Move SmsInboxPlugin.js to your project's www folder and include a reference to it in your html files. 
-2. Add the java files from src to your project's src hierarchy
-3. Reference the plugin in your res/config.xml file
-```<plugin name="SmsInboxPlugin" value="org.apache.cordova.plugin.SmsInboxPlugin"/>```
-4. Ensure that your manifest contains the necessary permissions to send SMS messages:
-```<uses-permission android:name="android.permission.RECEIVE_SMS" />```
-
-
-## Using the plugin ##
-To instantiate the plugin object:
-```javascript
-var smsInboxPlugin = cordova.require('cordova/plugin/smsinboxplugin');
-```
+0. (Make sure you are using Cordova > 3.5, but earlier versions should work too)
+1. Run command
+   
+        cordova plugin add https://github.com/kant2002/Cordova-SMS-Reception-Plugin
 
 ### isSupported ###
 Check if the SMS technology is supported by the device.
