@@ -22,8 +22,8 @@ THE SOFTWARE.
 
 package com.akurdyumov.cordova.smsinbox;
 
-import org.apache.cordova.api.CallbackContext;
-import org.apache.cordova.api.PluginResult;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
