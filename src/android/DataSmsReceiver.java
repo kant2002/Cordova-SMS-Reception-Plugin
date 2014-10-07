@@ -36,6 +36,8 @@ import android.telephony.SmsMessage;
 
 public class DataSmsReceiver extends BroadcastReceiver {
 	private static final String SMS_RECEIVED = "android.intent.action.DATA_SMS_RECEIVED";
+	private CallbackContext callback_receive;
+	private boolean isReceiving = true;
 
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
