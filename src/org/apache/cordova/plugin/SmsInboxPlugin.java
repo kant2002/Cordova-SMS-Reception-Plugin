@@ -35,12 +35,17 @@ import android.content.BroadcastReceiver;
 
 public class SmsInboxPlugin extends CordovaPlugin {
 	public final String ACTION_HAS_SMS_POSSIBILITY = "HasSMSPossibility";
-	public final String ACTION_RECEIVE_SMS = "StartReception";
-	public final String ACTION_STOP_RECEIVE_SMS = "StopReception";
+	public final String ACTION_RECEIVE_SMS = "StartSmsReception";
+    public final String ACTION_RECEIVE_DATA_SMS = "StartDataSmsReception";
+	public final String ACTION_STOP_RECEIVE_SMS = "StopSmsReception";
+    public final String ACTION_STOP_RECEIVE_DATA_SMS = "StopDataSmsReception";
 	
 	private CallbackContext callback_receive;
+    private CallbackContext callback_receive_data;
 	private SmsReceiver smsReceiver = null;
+    private DataSmsReceiver dataSmsReceiver = null;
 	private boolean isReceiving = false;
+    private boolean isReceivingData = false;
 	
 	public SmsInboxPlugin() {
 		super();
@@ -60,11 +65,10 @@ public class SmsInboxPlugin extends CordovaPlugin {
 			}
 			return true;
 		}
-		else if (action.equals(ACTION_RECEIVE_SMS)) {
-			
+		else if (action.equals(ACTION_RECEIVE_SMS)) {			
 			// if already receiving (this case can happen if the startReception is called
 			// several times
-			if(this.isReceiving) {
+			if (this.isReceiving) {
 				// close the already opened callback ...
 				PluginResult pluginResult = new PluginResult(
 						PluginResult.Status.NO_RESULT);
@@ -73,13 +77,13 @@ public class SmsInboxPlugin extends CordovaPlugin {
 				
 				// ... before registering a new one to the sms receiver
 			}
+            
 			this.isReceiving = true;
-				
-			if(this.smsReceiver == null) {
-                            IntentFilter filter = new IntentFilter("android.intent.action.DATA_SMS_RECEIVED");
-                            filter.addDataScheme("sms");
-                            this.smsReceiver = new SmsReceiver();
-                           this.cordova.getActivity().registerReceiver(this.smsReceiver, filter);
+			if (this.smsReceiver == null) {
+                IntentFilter filter = new IntentFilter("android.intent.action.SMS_RECEIVED");
+                filter.addDataScheme("sms");
+                this.smsReceiver = new SmsReceiver();
+                this.cordova.getActivity().registerReceiver(this.smsReceiver, filter);
 			}
 			((SmsReceiver)(this.smsReceiver)).startReceiving(callbackContext);
 	
@@ -88,6 +92,37 @@ public class SmsInboxPlugin extends CordovaPlugin {
 			pluginResult.setKeepCallback(true);
 			callbackContext.sendPluginResult(pluginResult);
 			this.callback_receive = callbackContext;
+			
+			return true;
+		}
+		else if (action.equals(ACTION_RECEIVE_DATA_SMS)) {
+			
+			// if already receiving (this case can happen if the startReception is called
+			// several times
+			if (this.isReceiving) {
+				// close the already opened callback ...
+				PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+				pluginResult.setKeepCallback(false);
+				this.callback_receive.sendPluginResult(pluginResult);
+				
+				// ... before registering a new one to the sms receiver
+			}
+			this.isReceivingData = true;
+				
+			if (this.dataSmsReceiver == null) {
+                IntentFilter filter = new IntentFilter("android.intent.action.DATA_SMS_RECEIVED");
+                filter.addDataScheme("sms");
+                this.dataSmsReceiver = new DataSmsReceiver();
+                this.cordova.getActivity().registerReceiver(this.smsReceiver, filter);
+			}
+            
+			this.dataSmsReceiver.startReceiving(callbackContext);
+	
+			PluginResult pluginResult = new PluginResult(
+					PluginResult.Status.NO_RESULT);
+			pluginResult.setKeepCallback(true);
+			callbackContext.sendPluginResult(pluginResult);
+			this.callback_receive_data = callbackContext;
 			
 			return true;
 		}
@@ -108,6 +143,25 @@ public class SmsInboxPlugin extends CordovaPlugin {
 			// 2. Send result for the current context
 			pluginResult = new PluginResult(
 					PluginResult.Status.OK);
+			callbackContext.sendPluginResult(pluginResult);
+			
+			return true;
+		}
+		else if(action.equals(ACTION_STOP_RECEIVE_DATA_SMS)) {
+			
+			if(this.dataSmsReceiver != null) {
+				dataSmsReceiver.stopReceiving();
+			}
+
+			this.isReceivingData = false;
+			
+			// 1. Stop the receiving context
+			PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+			pluginResult.setKeepCallback(false);
+			this.callback_receive_data.sendPluginResult(pluginResult);
+			
+			// 2. Send result for the current context
+			pluginResult = new PluginResult(PluginResult.Status.OK);
 			callbackContext.sendPluginResult(pluginResult);
 			
 			return true;

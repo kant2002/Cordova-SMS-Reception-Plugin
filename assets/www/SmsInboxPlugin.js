@@ -39,15 +39,26 @@ cordova.define("cordova/plugin/smsinboxplugin", function(require, exports, modul
    * formatted such as: [phonenumber]>[message].
    * Example: +32472345678>Hello World
    */
-  SmsInboxPlugin.prototype.startReception = function(successCallback,failureCallback) {
-    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StartReception', []);
+  SmsInboxPlugin.prototype.startSmsReception = function(successCallback,failureCallback) {
+    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StartSmsReception', []);
+  }
+  
+  SmsInboxPlugin.prototype.startDataSmsReception = function(successCallback,failureCallback) {
+    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StartDataSmsReception', []);
   }
 
   /**
    * Stop the receiving sms.
    */
-  SmsInboxPlugin.prototype.stopReception = function(successCallback,failureCallback) {
-    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StopReception', []);
+  SmsInboxPlugin.prototype.stopSmsReception = function(successCallback,failureCallback) {
+    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StopSmsReception', []);
+  }
+
+  /**
+   * Stop the receiving sms.
+   */
+  SmsInboxPlugin.prototype.stopDataSmsReception = function(successCallback,failureCallback) {
+    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StopDataSmsReception', []);
   }
 
   var smsinboxplugin = new SmsInboxPlugin();
