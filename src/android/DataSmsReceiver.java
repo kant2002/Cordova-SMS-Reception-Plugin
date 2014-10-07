@@ -26,6 +26,7 @@ package com.akurdyumov.cordova.smsinbox;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
+import org.apache.cordova.LOG;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,8 +35,6 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 
 public class DataSmsReceiver extends BroadcastReceiver {
-	
-
 	private static final String SMS_RECEIVED = "android.intent.action.DATA_SMS_RECEIVED";
 
 	@Override
@@ -46,29 +45,21 @@ public class DataSmsReceiver extends BroadcastReceiver {
 			final Bundle bundle = intent.getExtras();
 
 			try {
-
 				if (bundle != null) {
-
 					final Object[] pdusObj = (Object[]) bundle.get("pdus");
 
 					for (int i = 0; i < pdusObj.length; i++) {
-
 						SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
 						String senderNum = currentMessage.getDisplayOriginatingAddress();
 						String message = currentMessage.getDisplayMessageBody();
-						Log.d("SmsReceiver", "senderNum: " + senderNum
+						LOG.d("SmsReceiver", "senderNum: " + senderNum
 							  + "; message: " + message);
-					
-
-					} // end for loop
-				} // bundle is null
-
+					}
+				}
 			} catch (Exception e) {
-				Log.e("SmsReceiver", "Exception smsReceiver" + e);
-
+				LOG.e("SmsReceiver", "Exception smsReceiver" + e);
 			}
 		}
-
 	}
 	
 	public void broadcast(boolean v) {

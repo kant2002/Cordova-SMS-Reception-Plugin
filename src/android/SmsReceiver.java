@@ -24,6 +24,7 @@ package com.akurdyumov.cordova.smsinbox;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
+import org.apache.cordova.LOG;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
