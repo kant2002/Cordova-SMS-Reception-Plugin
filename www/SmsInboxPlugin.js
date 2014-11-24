@@ -19,6 +19,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+/* global cordova, module */
 var SmsInboxPlugin = function() {};
 
 
@@ -26,8 +27,8 @@ var SmsInboxPlugin = function() {};
 * Check if the device has a possibility to send and receive SMS
 */
 SmsInboxPlugin.prototype.isSupported = function(successCallback, failureCallback) {
-    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'HasSMSPossibility', []);
-}
+    return cordova.exec(successCallback, failureCallback, 'SmsInbox', 'HasSMSPossibility', []);
+};
 
 /**
 * Check if the device has a possibility to send and receive SMS
@@ -36,26 +37,26 @@ SmsInboxPlugin.prototype.isSupported = function(successCallback, failureCallback
 * Example: +32472345678>Hello World
 */
 SmsInboxPlugin.prototype.startSmsReception = function(successCallback, failureCallback) {
-    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StartSmsReception', []);
-}
+    return cordova.exec(successCallback, failureCallback, 'SmsInbox', 'StartSmsReception', []);
+};
 
 SmsInboxPlugin.prototype.startDataSmsReception = function(successCallback, failureCallback) {
-    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StartDataSmsReception', []);
-}
+    return cordova.exec(successCallback, failureCallback, 'SmsInbox', 'StartDataSmsReception', []);
+};
 
 /**
 * Stop the receiving sms.
 */
 SmsInboxPlugin.prototype.stopSmsReception = function(successCallback, failureCallback) {
-    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StopSmsReception', []);
-}
+    return cordova.exec(successCallback, failureCallback, 'SmsInbox', 'StopSmsReception', []);
+};
 
 /**
 * Stop the receiving sms.
 */
 SmsInboxPlugin.prototype.stopDataSmsReception = function(successCallback, failureCallback) {
-    return exec(successCallback, failureCallback, 'SmsInboxPlugin', 'StopDataSmsReception', []);
-}
+    return cordova.exec(successCallback, failureCallback, 'SmsInbox', 'StopDataSmsReception', []);
+};
 
 var smsinboxplugin = new SmsInboxPlugin();
 module.exports = smsinboxplugin;
